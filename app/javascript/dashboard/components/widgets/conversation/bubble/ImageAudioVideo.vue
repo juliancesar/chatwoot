@@ -56,6 +56,10 @@ export default {
     return {
       show: false,
       isImageError: false,
+      dataUrl: null,
+      dataUrlBackup: null,
+      maxTries: 3,
+      countTryShowImage: 1,
     };
   },
   computed: {
@@ -83,9 +87,6 @@ export default {
       );
       return attachments;
     },
-    dataUrl() {
-      return this.attachment.data_url;
-    },
     imageWidth() {
       return this.attachment.width ? `${this.attachment.width}px` : 'auto';
     },
@@ -98,6 +99,9 @@ export default {
       this.isImageError = false;
     },
   },
+  mounted() {
+    this.dataUrl = this.attachment.data_url;
+  },
   methods: {
     onClose() {
       this.show = false;
@@ -109,9 +113,26 @@ export default {
       }
       this.show = true;
     },
-    onImgError() {
+    async onImgError() {
       this.isImageError = true;
-      this.$emit('error');
+
+      if (this.countTryShowImage > this.maxTries) {
+        // console.log("MAX TENTATIVAS EXECIDO!", this.countTryShowImage, this.maxTries);      
+        this.$emit('error');
+        return;
+      }
+
+      if (!this.dataUrlBackup) {
+        this.dataUrlBackup = this.dataUrl;
+      }
+       
+      await new Promise(resolve => setTimeout(resolve, 200));
+
+      this.isImageError = false;
+      this.dataUrl = this.dataUrlBackup + '?t=' + Date.now();
+      // this.dataUrl = '?t=' + Date.now();
+
+      this.countTryShowImage++;
     },
   },
 };
