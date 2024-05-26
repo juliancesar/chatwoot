@@ -58,7 +58,7 @@ export default {
       isImageError: false,
       dataUrl: null,
       dataUrlBackup: null,
-      maxTries: 3,
+      maxTries: 5,
       countTryShowImage: 1,
     };
   },
@@ -117,7 +117,7 @@ export default {
       this.isImageError = true;
 
       if (this.countTryShowImage > this.maxTries) {
-        // console.log("MAX TENTATIVAS EXECIDO!", this.countTryShowImage, this.maxTries);      
+        console.log("MAX TENTATIVAS EXCECIDO! URL: ", this.dataUrl);
         this.$emit('error');
         return;
       }
@@ -126,7 +126,7 @@ export default {
         this.dataUrlBackup = this.dataUrl;
       }
        
-      await new Promise(resolve => setTimeout(resolve, 200));
+      await new Promise(resolve => setTimeout(resolve, 500));
 
       this.isImageError = false;
       this.dataUrl = this.dataUrlBackup + '?t=' + Date.now();
