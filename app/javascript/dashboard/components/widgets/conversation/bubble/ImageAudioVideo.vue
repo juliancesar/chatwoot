@@ -122,6 +122,8 @@ export default {
         return;
       }
 
+      console.log("ERROR... TRYING AGAIN...");
+
       if (!this.dataUrlBackup) {
         this.dataUrlBackup = this.dataUrl;
       }
@@ -133,6 +135,8 @@ export default {
       // this.dataUrl = '?t=' + Date.now();
 
       this.countTryShowImage++;
+
+      
     },
   },
 };
