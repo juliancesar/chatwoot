@@ -117,12 +117,12 @@ export default {
       this.isImageError = true;
 
       if (this.countTryShowImage > this.maxTries) {
-        console.log("MAX TENTATIVAS EXCECIDO! URL: ", this.dataUrl);
+        // console.log("MAX TENTATIVAS EXCECIDO! URL: ", this.dataUrl);
         this.$emit('error');
         return;
       }
 
-      console.log("ERROR... TRYING AGAIN...");
+      // console.log("ERROR... TRYING AGAIN...");
 
       if (!this.dataUrlBackup) {
         this.dataUrlBackup = this.dataUrl;
