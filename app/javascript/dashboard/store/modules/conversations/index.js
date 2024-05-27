@@ -138,6 +138,7 @@ export const mutations = {
       message.status === MESSAGE_STATUS.SENT && message.attachments;
     if (isMessageSent) {
       message.attachments.forEach(attachment => {
+        // NPE fix of chat.attachments
         if (chat.attachments && !chat.attachments.some(a => a.id === attachment.id)) {
           chat.attachments.push(attachment);
         }
