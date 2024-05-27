@@ -101,11 +101,9 @@ export default {
   },
   mounted() {
     // Add delay to show image
-    console.log(new Date(), "Aguardando 1s para carregar a imagem...");    
     setTimeout(() => {      
       this.dataUrl = this.attachment.data_url;
-      console.log(new Date(), "Carregando imagem...", this.dataUrl);
-    }, 1000);    
+    }, 1000);
   },
   methods: {
     onClose() {
@@ -122,18 +120,15 @@ export default {
       this.isImageError = true;
 
       if (this.countTryShowImage > this.maxTries) {
-        console.log(new Date(), "Max tentativas excedido! URL: ", this.dataUrl);
         this.$emit('error');
         return;
       }
-
-      console.log(new Date(), "Erro! Tentando novamente...", this.dataUrl);
 
       if (!this.dataUrlBackup) {
         this.dataUrlBackup = this.dataUrl;
       }
        
-      await new Promise(resolve => setTimeout(resolve, 500));
+      await new Promise(resolve => setTimeout(resolve, 1000));
 
       this.isImageError = false;
 
