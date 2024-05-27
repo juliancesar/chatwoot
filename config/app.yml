@@ -1,5 +1,5 @@
 shared: &shared
-  version: '3.9.3-ekipes'
+  version: '3.9.4-ekipes'
 
 development:
   <<: *shared
