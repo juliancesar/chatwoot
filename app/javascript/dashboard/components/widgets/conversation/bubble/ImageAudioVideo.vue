@@ -100,12 +100,12 @@ export default {
     },
   },
   mounted() {
-    console.log(new Date(), "Aguardando 2s para carregar a imagem...");
     // Add delay to show image
+    console.log(new Date(), "Aguardando 1s para carregar a imagem...");    
     setTimeout(() => {      
       this.dataUrl = this.attachment.data_url;
       console.log(new Date(), "Carregando imagem...", this.dataUrl);
-    }, 2000);    
+    }, 1000);    
   },
   methods: {
     onClose() {
@@ -127,7 +127,7 @@ export default {
         return;
       }
 
-      console.log(new Date(), "Erro! Tentando novamente...");
+      console.log(new Date(), "Erro! Tentando novamente...", this.dataUrl);
 
       if (!this.dataUrlBackup) {
         this.dataUrlBackup = this.dataUrl;
