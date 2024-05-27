@@ -100,7 +100,12 @@ export default {
     },
   },
   mounted() {
-    this.dataUrl = this.attachment.data_url;
+    console.log(new Date(), "Aguardando 2s para carregar a imagem...");
+    // Add delay to show image
+    setTimeout(() => {      
+      this.dataUrl = this.attachment.data_url;
+      console.log(new Date(), "Carregando imagem...", this.dataUrl);
+    }, 2000);    
   },
   methods: {
     onClose() {
@@ -117,12 +122,12 @@ export default {
       this.isImageError = true;
 
       if (this.countTryShowImage > this.maxTries) {
-        // console.log("MAX TENTATIVAS EXCECIDO! URL: ", this.dataUrl);
+        console.log(new Date(), "Max tentativas excedido! URL: ", this.dataUrl);
         this.$emit('error');
         return;
       }
 
-      // console.log("ERROR... TRYING AGAIN...");
+      console.log(new Date(), "Erro! Tentando novamente...");
 
       if (!this.dataUrlBackup) {
         this.dataUrlBackup = this.dataUrl;
@@ -131,12 +136,12 @@ export default {
       await new Promise(resolve => setTimeout(resolve, 500));
 
       this.isImageError = false;
-      this.dataUrl = this.dataUrlBackup + '?t=' + Date.now();
-      // this.dataUrl = '?t=' + Date.now();
+
+      var url = new URL(this.dataUrlBackup);
+      url.searchParams.set('t', Date.now())
+      this.dataUrl = url.toString();
 
       this.countTryShowImage++;
-
-      
     },
   },
 };
