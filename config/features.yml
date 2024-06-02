@@ -51,7 +51,7 @@
 - name: channel_website
   enabled: true
 - name: campaigns
-  enabled: true
+  enabled: false
   help_url: https://chwt.app/hc/campaigns
 - name: reports
   enabled: true

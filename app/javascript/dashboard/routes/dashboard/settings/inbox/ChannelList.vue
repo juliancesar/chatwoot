@@ -54,7 +54,7 @@ export default {
         { key: 'website', name: 'Website' },
         { key: 'facebook', name: 'Messenger' },
         { key: 'whatsapp', name: 'WhatsApp' },
-        { key: 'sms', name: 'SMS' },
+        // { key: 'sms', name: 'SMS' },
         { key: 'email', name: 'Email' },
         {
           key: 'api',
@@ -62,7 +62,7 @@ export default {
           thumbnail: apiChannelThumbnail,
         },
         { key: 'telegram', name: 'Telegram' },
-        { key: 'line', name: 'Line' },
+        // { key: 'line', name: 'Line' },
       ];
     },
     ...mapGetters({
