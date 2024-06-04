@@ -4,7 +4,7 @@
       "FILTER": "Filtrar por",
       "SORT": "Ordenar por",
       "LOCALE": "Idioma",
-      "SETTINGS_BUTTON": "Confirgurações",
+      "SETTINGS_BUTTON": "Configurações",
       "NEW_BUTTON": "Novo Artigo",
       "DROPDOWN_OPTIONS": {
         "PUBLISHED": "Publicado",
@@ -115,7 +115,7 @@
             "COUNT_LABEL": "artigos",
             "ADD": "Adicionar idioma",
             "VISIT": "Abrir site",
-            "SETTINGS": "Confirgurações",
+            "SETTINGS": "Configurações",
             "DELETE": "excluir"
           },
           "PORTAL_CONFIG": {
