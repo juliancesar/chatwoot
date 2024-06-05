@@ -101,9 +101,13 @@ export default {
   },
   mounted() {
     // Add delay to show image
-    setTimeout(() => {      
+    if (this.isImage) {
+      setTimeout(() => {      
+        this.dataUrl = this.attachment.data_url;
+      }, 1000);
+    } else{
       this.dataUrl = this.attachment.data_url;
-    }, 1000);
+    }
   },
   methods: {
     onClose() {
