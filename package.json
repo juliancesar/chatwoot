@@ -1,6 +1,6 @@
 {
   "name": "@chatwoot/chatwoot",
-  "version": "3.9.8-ekipes",
+  "version": "3.9.9-ekipes",
   "license": "MIT",
   "scripts": {
     "eslint": "eslint app/**/*.{js,vue}",
