@@ -137,7 +137,6 @@ Rails.application.routes.draw do
               resources :conversations, only: [:index] do 
                 collection do
                   get :last_activity
-                  get :last_activities
                 end
               end
               resources :contact_inboxes, only: [:create]
