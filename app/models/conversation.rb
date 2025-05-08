@@ -105,6 +105,7 @@ class Conversation < ApplicationRecord
   has_many :attachments, through: :messages
 
   before_save :ensure_snooze_until_reset
+  before_save :check_if_can_update_conversation
   before_create :determine_conversation_status
   before_create :ensure_waiting_since
 
@@ -210,6 +211,14 @@ class Conversation < ApplicationRecord
     notify_status_change
     create_activity
     notify_conversation_updation
+  end
+
+  def check_if_can_update_conversation
+    hideAllTabs = ENV.fetch('EKIPES_HIDE_ALL_TABS_WHEN_AGENT', '').split(',').map(&:to_i)
+    if Current.user.agent? && hideAllTabs.include?(Current.account.id) && assignee_id.present? && Current.user&.id != assignee_id_in_database
+      errors.add(:base, "Você não tem permissão.")
+      throw(:abort)
+    end
   end
 
   def ensure_snooze_until_reset

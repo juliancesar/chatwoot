@@ -41,6 +41,14 @@ class Conversations::FilterService < FilterService
   end
 
   def conversations
-    @conversations.sort_on_last_activity_at.page(current_page)
+    
+    # Faz o filtro pela atribuição
+    hideAllTabs = ENV.fetch('EKIPES_HIDE_ALL_TABS_WHEN_AGENT', '').split(',').map(&:to_i)
+    if @user.administrator? || (@user.agent? && !hideAllTabs.include?(Current.account.id))
+      @conversations.sort_on_last_activity_at.page(current_page)
+    else
+      @conversations.sort_on_last_activity_at.page(current_page).assigned_to(@user)
+    end
+  
   end
 end

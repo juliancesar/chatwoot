@@ -86,7 +86,14 @@ class ConversationFinder
   end
 
   def find_all_conversations
-    @conversations = current_account.conversations.where(inbox_id: @inbox_ids)
+    
+    hideAllTabs = ENV.fetch('EKIPES_HIDE_ALL_TABS_WHEN_AGENT', '').split(',').map(&:to_i)
+    if current_user.administrator? || (current_user.agent? && !hideAllTabs.include?(current_account.id))
+      @conversations = current_account.conversations.where(inbox_id: @inbox_ids)
+    else      
+      @conversations = current_account.conversations.where(inbox_id: @inbox_ids, assignee_id: current_user.id)
+    end
+
     filter_by_conversation_type if params[:conversation_type]
     @conversations
   end
