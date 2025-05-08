@@ -135,7 +135,12 @@ Rails.application.routes.draw do
               delete :avatar
             end
             scope module: :contacts do
-              resources :conversations, only: [:index]
+              resources :conversations, only: [:index] do 
+                collection do
+                  get :last_activity
+                  get :last_activities
+                end
+              end
               resources :contact_inboxes, only: [:create]
               resources :labels, only: [:create, :index]
               resources :notes
