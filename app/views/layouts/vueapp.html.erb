@@ -48,7 +48,8 @@
         <% end %>
         enabledLanguages: <%= available_locales_with_name.to_json.html_safe %>,
         helpUrls: <%= feature_help_urls.to_json.html_safe %>,
-        selectedLocale: '<%= I18n.locale %>'
+        selectedLocale: '<%= I18n.locale %>',
+        ekipesConfigMoe: '<%= ENV.fetch('EKIPES_HIDE_ALL_TABS_WHEN_AGENT', '') %>'.split(",").map(Number)
       }
       window.globalConfig = <%= raw @global_config.to_json %>
       window.browserConfig = {

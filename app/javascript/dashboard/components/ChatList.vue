@@ -178,7 +178,7 @@ const hasActiveFolders = computed(() => {
 });
 
 const hasAppliedFiltersOrActiveFolders = computed(() => {
-  return hasAppliedFilters.value || hasActiveFolders.value;
+  return hasAppliedFilters.value || hasActiveFolders.value || (userPermissions.value[0] == 'agent' && window.chatwootConfig.ekipesConfigMoe.indexOf(currentAccountId.value) != -1);
 });
 
 const currentUserDetails = computed(() => {
@@ -190,7 +190,7 @@ const userPermissions = computed(() => {
   return getUserPermissions(currentUser.value, currentAccountId.value);
 });
 
-const assigneeTabItems = computed(() => {
+const assigneeTabItems = computed(() => {  
   return filterItemsByPermission(
     ASSIGNEE_TYPE_TAB_PERMISSIONS,
     userPermissions.value,
