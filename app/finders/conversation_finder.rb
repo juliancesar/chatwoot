@@ -152,11 +152,20 @@ class ConversationFinder
   end
 
   def set_count_for_all_conversations
-    [
-      @conversations.assigned_to(current_user).count,
-      @conversations.unassigned.count,
-      @conversations.count
-    ]
+    hideAllTabs = ENV.fetch('EKIPES_HIDE_ALL_TABS_WHEN_AGENT', '').split(',').map(&:to_i)
+    if @current_user.agent? && hideAllTabs.include?(@current_account.id)
+      [
+        @conversations.assigned_to(current_user).count,
+        0,
+        @conversations.assigned_to(current_user).count,
+      ]
+    else
+      [
+        @conversations.assigned_to(current_user).count,
+        @conversations.unassigned.count,
+        @conversations.count
+      ]
+    end
   end
 
   def current_page
@@ -164,7 +173,6 @@ class ConversationFinder
   end
 
   def conversations_base_query
-
     hideAllTabs = ENV.fetch('EKIPES_HIDE_ALL_TABS_WHEN_AGENT', '').split(',').map(&:to_i)
     if @current_user.agent? && hideAllTabs.include?(@current_account.id)
       @conversations = @conversations.where(assignee_id: @current_user.id)
