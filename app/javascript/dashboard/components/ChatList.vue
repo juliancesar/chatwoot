@@ -178,7 +178,7 @@ const hasActiveFolders = computed(() => {
 });
 
 const hasAppliedFiltersOrActiveFolders = computed(() => {
-  return hasAppliedFilters.value || hasActiveFolders.value || (userPermissions.value[0] == 'agent' && window.chatwootConfig.ekipesConfigMoe.indexOf(currentAccountId.value) != -1);
+  return hasAppliedFilters.value || hasActiveFolders.value;
 });
 
 const currentUserDetails = computed(() => {
