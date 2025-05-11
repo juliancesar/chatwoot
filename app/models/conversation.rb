@@ -215,7 +215,7 @@ class Conversation < ApplicationRecord
 
   def check_if_can_update_conversation
     hideAllTabs = ENV.fetch('EKIPES_HIDE_ALL_TABS_WHEN_AGENT', '').split(',').map(&:to_i)
-    if Current.user.agent? && hideAllTabs.include?(Current.account.id) && assignee_id.present? && Current.user&.id != assignee_id_in_database
+    if Current.user&.agent? && hideAllTabs.include?(Current.account.id) && Current.user&.id != assignee_id_in_database
       errors.add(:base, "Você não tem permissão.")
       throw(:abort)
     end

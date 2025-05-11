@@ -142,7 +142,13 @@ class Api::V1::Accounts::ConversationsController < Api::V1::Accounts::BaseContro
   end
 
   def conversation
-    @conversation ||= Current.account.conversations.find_by!(display_id: params[:id])
+    hideAllTabs = ENV.fetch('EKIPES_HIDE_ALL_TABS_WHEN_AGENT', '').split(',').map(&:to_i)
+    if Current.user&.agent? && hideAllTabs.include?(Current.account.id)
+      @conversation ||= Current.account.conversations.find_by!(display_id: params[:id], assignee_id: current_user.id)
+    else      
+      @conversation ||= Current.account.conversations.find_by!(display_id: params[:id])
+    end
+    
     authorize @conversation.inbox, :show?
   end
 

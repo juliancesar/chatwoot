@@ -86,14 +86,7 @@ class ConversationFinder
   end
 
   def find_all_conversations
-    
-    hideAllTabs = ENV.fetch('EKIPES_HIDE_ALL_TABS_WHEN_AGENT', '').split(',').map(&:to_i)
-    if current_user.administrator? || (current_user.agent? && !hideAllTabs.include?(current_account.id))
-      @conversations = current_account.conversations.where(inbox_id: @inbox_ids)
-    else      
-      @conversations = current_account.conversations.where(inbox_id: @inbox_ids, assignee_id: current_user.id)
-    end
-
+    @conversations = current_account.conversations.where(inbox_id: @inbox_ids)
     filter_by_conversation_type if params[:conversation_type]
     @conversations
   end
@@ -171,6 +164,12 @@ class ConversationFinder
   end
 
   def conversations_base_query
+
+    hideAllTabs = ENV.fetch('EKIPES_HIDE_ALL_TABS_WHEN_AGENT', '').split(',').map(&:to_i)
+    if @current_user.agent? && hideAllTabs.include?(@current_account.id)
+      @conversations = @conversations.where(assignee_id: @current_user.id)
+    end
+
     @conversations.includes(
       :taggings, :inbox, { assignee: { avatar_attachment: [:blob] } }, { contact: { avatar_attachment: [:blob] } }, :team, :contact_inbox
     )
