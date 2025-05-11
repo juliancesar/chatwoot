@@ -116,21 +116,21 @@ class ActionCableListener < BaseListener
 
   def assignee_changed(event)
     conversation, account = extract_conversation_and_account(event)
-    tokens = user_tokens(account, conversation.inbox.members)
+    tokens = user_tokens_with_assign_verification(account, conversation)
 
     broadcast(account, tokens, ASSIGNEE_CHANGED, conversation.push_event_data)
   end
 
   def team_changed(event)
     conversation, account = extract_conversation_and_account(event)
-    tokens = user_tokens(account, conversation.inbox.members)
+    tokens = user_tokens_with_assign_verification(account, conversation)
 
     broadcast(account, tokens, TEAM_CHANGED, conversation.push_event_data)
   end
 
   def conversation_contact_changed(event)
     conversation, account = extract_conversation_and_account(event)
-    tokens = user_tokens(account, conversation.inbox.members)
+    tokens = user_tokens_with_assign_verification(account, conversation)
 
     broadcast(account, tokens, CONVERSATION_CONTACT_CHANGED, conversation.push_event_data)
   end
@@ -184,7 +184,8 @@ class ActionCableListener < BaseListener
   end
 
   def user_tokens_with_assign_verification(account, conversation)
-    if account.id == 1
+    hideAllTabs = ENV.fetch('EKIPES_HIDE_ALL_TABS_WHEN_AGENT', '').split(',').map(&:to_i)
+    if hideAllTabs.include?(account.id)
       assignee = conversation.assignee
       agent_token = assignee.present? ? [assignee.pubsub_token] : []
     else
